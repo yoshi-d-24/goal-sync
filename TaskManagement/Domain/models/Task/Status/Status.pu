@@ -1,0 +1,13 @@
+@startuml Status
+
+class "Status(ステータス)" as Status {
+    + value: number
+}
+
+note bottom of Status
+    0: 未着手
+    1: 進行中
+    2: 完了
+end note
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml TaskAggregation
+
+!include ./TaskId/TaskId.pu
+!include ./Title/Title.pu
+!include ./Detail/Detail.pu
+!include ./Status/Status.pu
+
+class "Task(タスク)" as Task << (R,red) RootEntity >> {
+    TaskId: タスクID
+    Title: タイトル
+    Detail: 詳細 
+    Status: ステータス
+}
+
+Task *-down- TaskId
+Task *-down- Title
+Task *-down- Detail
+Task *-down- Status
+
+@enduml

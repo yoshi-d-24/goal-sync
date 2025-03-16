@@ -1,0 +1,13 @@
+@startuml Detail
+
+class "Detail(詳細)" as Detail {
+    + value: string
+}
+
+note bottom of Detail
+    MIN_LENGTH: 1
+    MAX_LENGTH: 300
+end note
+
+@enduml
+```
