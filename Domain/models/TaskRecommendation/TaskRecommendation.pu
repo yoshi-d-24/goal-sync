@@ -1,0 +1,19 @@
+@startuml TaskRecommendation
+
+!include ./TaskRecommendationId/TaskRecommendationId.pu
+!include ./TaskRecommendationReason/TaskRecommendationReason.pu
+!include ../Goal/GoalId/GoalId.pu
+!include ../Task/TaskId/TaskId.pu
+
+class "TaskRecommendation(タスク推薦)" as TaskRecommendation {
+    TaskRecommendationId: TaskRecommendationId
+    TaskRecommendationReason: TaskRecommendationReason
+    GoalId: GoalId
+    TaskId: TaskId
+}
+
+TaskRecommendation *-down- TaskRecommendationId
+TaskRecommendation *-down- TaskRecommendationReason
+TaskRecommendation *-down- GoalId
+TaskRecommendation *-down- TaskId
+@enduml

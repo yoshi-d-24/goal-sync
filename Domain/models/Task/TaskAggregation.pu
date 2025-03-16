@@ -1,6 +1,5 @@
 @startuml TaskAggregation
 
-
 package "タスク集約(TaskAggregation)" {
     !include ./Task.pu
 }

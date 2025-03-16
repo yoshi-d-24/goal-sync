@@ -1,0 +1,12 @@
+@startuml TaskRecommendationAggregation
+
+package "タスク推薦集約(TaskRecommendationAggregation)" {
+    !include ./TaskRecommendation.pu
+    !include ../Goal/Goal.pu
+    !include ../Task/Task.pu
+
+    Goal "0..1" -- "*" TaskRecommendation
+    Task "0..1" -- "1" TaskRecommendation
+}
+
+@enduml

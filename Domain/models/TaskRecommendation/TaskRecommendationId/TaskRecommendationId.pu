@@ -1,0 +1,5 @@
+@startuml TaskRecommendationId
+class "TaskRecommendationId(タスク推薦ID)" as TaskRecommendationId {
+    + value: number
+}
+@enduml

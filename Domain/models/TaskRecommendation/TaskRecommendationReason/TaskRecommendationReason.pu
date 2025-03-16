@@ -1,0 +1,10 @@
+@startuml RecommedationReason
+class "TaskRecommendationReason(タスク推薦理由)" as TaskRecommendationReason {
+    + value: string
+}
+
+note bottom of TaskRecommendationReason
+    MIN_LENGTH: 1
+    MAX_LENGTH: 300
+end note
+@enduml
