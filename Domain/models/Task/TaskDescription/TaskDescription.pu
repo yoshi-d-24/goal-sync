@@ -1,0 +1,10 @@
+@startuml TaskDescription
+class "TaskDescription(タスク詳細)" as TaskDescription {
+    +value: string
+}
+
+note bottom of TaskDescription
+    MIN_LENGTH: 1
+    MAX_LENGTH: 200
+end note
+@enduml

@@ -1,0 +1,5 @@
+@startuml GoalId
+class "GoalId(ゴールID)" as GoalId {
+    +value: number
+}
+@enduml

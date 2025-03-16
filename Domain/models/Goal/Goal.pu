@@ -1,0 +1,23 @@
+@startuml Goal
+
+!include ./GoalId/GoalId.pu
+!include ./Title/Title.pu
+!include ./GoalDescription/GoalDescription.pu
+!include ./Importance/Importance.pu
+!include ./GoalStatus/GoalStatus.pu
+
+class "Goal(目標)" as Goal {
+    GoalId: GoalID
+    Title: Title
+    Description: GoalDescription
+    Importance: Importance
+    GoalStatus: GoalStatus
+}
+
+Goal *-down- GoalId
+Goal *-down- Title
+Goal *-down- GoalDescription
+Goal *-down- Importance
+Goal *-down- GoalStatus
+
+@enduml

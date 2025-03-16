@@ -1,0 +1,10 @@
+@startuml TaskComment
+class "TaskComment(コメント)" as TaskComment {
+    + value: string
+}
+
+note bottom of TaskComment
+    MIN_LENGTH: 1
+    MAX_LENGTH: 1000
+end note
+@enduml

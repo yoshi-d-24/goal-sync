@@ -1,0 +1,13 @@
+@startuml TaskStatus
+
+class "TaskStatus(ステータス)" as TaskStatus {
+    + value: number
+}
+
+note bottom of TaskStatus
+    0: 未着手
+    1: 進行中
+    2: 完了
+end note
+
+@enduml

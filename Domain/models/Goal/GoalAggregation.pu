@@ -1,0 +1,11 @@
+@startuml GoalAggregation
+package "GoalAggregation" {
+    !include ./Goal.pu
+    !include ../Task/Task.pu
+
+   
+    Goal "1" -- "*" Task
+}
+
+
+@enduml

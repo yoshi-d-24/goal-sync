@@ -1,0 +1,10 @@
+@startuml GoalDescription
+class "GoalDescription(詳細)" as GoalDescription {
+    +value : string
+}
+
+note bottom of GoalDescription
+    MIN_LENGTH: 1
+    MAX_LENGTH: 500
+end note
+@enduml

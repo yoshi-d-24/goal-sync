@@ -1,10 +1,10 @@
-@startuml Detail
+@startuml DoD
 
-class "Detail(詳細)" as Detail {
+class "DoD(完了定義)" as DoD {
     + value: string
 }
 
-note bottom of Detail
+note bottom of DoD
     MIN_LENGTH: 1
     MAX_LENGTH: 300
 end note

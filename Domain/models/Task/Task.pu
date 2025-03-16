@@ -1,0 +1,26 @@
+@startuml Task
+
+!include ./TaskId/TaskId.pu
+!include ./Title/Title.pu
+!include ./TaskDescription/TaskDescription.pu
+!include ./DoD/DoD.pu
+!include ./TaskComment/TaskComment.pu
+!include ./TaskStatus/TaskStatus.pu
+
+class "Task(タスク)" as Task << (R,red) RootEntity >> {
+    TaskId: TaskId
+    Title: Title
+    Description: TaskDescription
+    DoD: DoD
+    Comments: TaskComment
+    Status: TaskStatus
+}
+
+Task *-down- TaskId
+Task *-down- Title
+Task *-down- TaskDescription
+Task *-down- DoD
+Task "1" *-down- "*" TaskComment
+Task *-down- TaskStatus
+
+@enduml

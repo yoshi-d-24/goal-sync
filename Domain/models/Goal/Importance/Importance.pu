@@ -1,0 +1,10 @@
+@startuml Importance
+class "Importance(重要度)" as Importance {
+    +value: number
+}
+
+note bottom of Importance
+    MIN: 1
+    MAX: 10
+end note
+@enduml
