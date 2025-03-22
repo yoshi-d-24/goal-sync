@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -7,12 +7,12 @@ import (
 )
 
 type TaskId struct {
-	Core.ValueObject[int]
+	Core.IValueObject[int]
 }
 
 func NewTaskId(value int) (*TaskId, error) {
 	if value <= 0 {
 		return nil, fmt.Errorf("TaskId must be greater than 0")
 	}
-	return &TaskId{ValueObject: Core.NewValueObject(value)}, nil
+	return &TaskId{Core.NewValueObject(value)}, nil
 }

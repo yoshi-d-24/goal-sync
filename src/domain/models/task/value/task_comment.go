@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ const (
 )
 
 type TaskComment struct {
-	Core.ValueObject[string]
+	Core.IValueObject[string]
 }
 
 func NewTaskComment(value string) (*TaskComment, error) {
@@ -23,5 +23,5 @@ func NewTaskComment(value string) (*TaskComment, error) {
 	if utf8.RuneCountInString(value) > DOD_MAX_LENGTH {
 		return nil, fmt.Errorf("TaskComment must be no more than %d characters long", DOD_MAX_LENGTH)
 	}
-	return &TaskComment{ValueObject: Core.NewValueObject(value)}, nil
+	return &TaskComment{Core.NewValueObject(value)}, nil
 }

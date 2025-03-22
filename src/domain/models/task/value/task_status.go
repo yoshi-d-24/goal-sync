@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ const (
 )
 
 type TaskStatus struct {
-	Core.ValueObject[int]
+	Core.IValueObject[int]
 }
 
 func NewTaskStatus(value int) (*TaskStatus, error) {
@@ -21,6 +21,6 @@ func NewTaskStatus(value int) (*TaskStatus, error) {
 		return nil, fmt.Errorf("invalid TaskStatus value: %d", value)
 	}
 
-	taskStatus := TaskStatus{ValueObject: Core.NewValueObject(value)}
+	taskStatus := TaskStatus{Core.NewValueObject(value)}
 	return &taskStatus, nil
 }

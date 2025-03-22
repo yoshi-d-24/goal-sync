@@ -1,11 +1,11 @@
 @startuml Task
 
-!include ./Value/TaskId.pu
-!include ./Value/Title.pu
-!include ./Value/TaskDescription.pu
-!include ./Value/DoD.pu
-!include ./Value/TaskComment.pu
-!include ./Value/TaskStatus.pu
+!include ./value/TaskId.pu
+!include ./value/Title.pu
+!include ./value/TaskDescription.pu
+!include ./value/DoD.pu
+!include ./value/TaskComment.pu
+!include ./value/TaskStatus.pu
 
 class "Task(タスク)" as Task << (R,red) RootEntity >> {
     TaskId: TaskId

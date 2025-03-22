@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ const (
 )
 
 type DoD struct {
-	Core.ValueObject[string]
+	Core.IValueObject[string]
 }
 
 func NewDoD(value string) (*DoD, error) {
@@ -23,5 +23,5 @@ func NewDoD(value string) (*DoD, error) {
 	if utf8.RuneCountInString(value) > DOD_MAX_LENGTH {
 		return nil, fmt.Errorf("DoD must be no more than %d characters long", DOD_MAX_LENGTH)
 	}
-	return &DoD{ValueObject: Core.NewValueObject(value)}, nil
+	return &DoD{Core.NewValueObject(value)}, nil
 }

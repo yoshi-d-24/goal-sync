@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ const (
 )
 
 type Title struct {
-	Core.ValueObject[string]
+	Core.IValueObject[string]
 }
 
 func NewTitle(value string) (*Title, error) {
@@ -23,5 +23,5 @@ func NewTitle(value string) (*Title, error) {
 	if utf8.RuneCountInString(value) > TITLE_MAX_LENGTH {
 		return nil, fmt.Errorf("title must be no more than %d characters long", TITLE_MAX_LENGTH)
 	}
-	return &Title{ValueObject: Core.NewValueObject(value)}, nil
+	return &Title{Core.NewValueObject(value)}, nil
 }

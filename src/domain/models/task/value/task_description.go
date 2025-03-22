@@ -1,4 +1,4 @@
-package valueobject
+package value
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ const (
 )
 
 type TaskDescription struct {
-	Core.ValueObject[string]
+	Core.IValueObject[string]
 }
 
 func NewTaskDescription(value string) (*TaskDescription, error) {
@@ -23,5 +23,5 @@ func NewTaskDescription(value string) (*TaskDescription, error) {
 	if utf8.RuneCountInString(value) > TASK_DESCRIPTION_MAX_LENGTH {
 		return nil, fmt.Errorf("TaskDescription must be no more than %d characters long", TASK_DESCRIPTION_MAX_LENGTH)
 	}
-	return &TaskDescription{ValueObject: Core.NewValueObject(value)}, nil
+	return &TaskDescription{Core.NewValueObject(value)}, nil
 }
