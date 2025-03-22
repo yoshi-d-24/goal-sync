@@ -8,11 +8,11 @@ import (
 func TestNewGoalStatus(t *testing.T) {
 	tests := []struct {
 		value       int
-		expected    GoalStatusEnum
+		expected    int
 		expectedErr error
 	}{
-		{value: 0, expected: Incomplete, expectedErr: nil},
-		{value: 1, expected: Complete, expectedErr: nil},
+		{value: 0, expected: int(Incomplete), expectedErr: nil},
+		{value: 1, expected: int(Complete), expectedErr: nil},
 		{value: -1, expected: 0, expectedErr: fmt.Errorf("invalid GoalStatusEnum value: %d", -1)},
 		{value: 2, expected: 0, expectedErr: fmt.Errorf("invalid GoalStatusEnum value: %d", 2)},
 	}

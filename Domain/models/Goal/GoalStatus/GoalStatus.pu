@@ -4,8 +4,8 @@ class "GoalStatus(ステータス)" as GoalStatus {
 }
 
 note bottom of GoalStatus
-    1: 未完了
-    2: 完了
+    0: 未完了
+    1: 完了
 end note
 
 @enduml

@@ -4,31 +4,27 @@ import (
 	"fmt"
 )
 
-type GoalStatusEnum int
+type GoalStatus int
 
 const (
-	Incomplete GoalStatusEnum = iota
+	Incomplete GoalStatus = iota
 	Complete
 )
 
 type GoalStatusInterface interface {
-	Value() GoalStatusEnum
-}
-
-type GoalStatus struct {
-	value GoalStatusEnum
+	Value() int
 }
 
 func NewGoalStatus(value int) (GoalStatusInterface, error) {
 	if err := validate(value); err != nil {
 		return nil, err
 	}
-	goalStatus := GoalStatusEnum(value)
-	return &GoalStatus{value: goalStatus}, nil
+	goalStatus := GoalStatus(value)
+	return &goalStatus, nil
 }
 
-func (g *GoalStatus) Value() GoalStatusEnum {
-	return g.value
+func (g *GoalStatus) Value() int {
+	return int(*g)
 }
 
 func validate(value int) error {
