@@ -18,38 +18,38 @@ func TestInMemoryTaskRepository_FindById(t *testing.T) {
 		id int
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    *TaskModel.Task
-		wantErr bool
+		name        string
+		args        args
+		expected    *TaskModel.Task
+		expectedErr bool
 	}{
 		{
-			name:    "正常系",
-			args:    args{id: id},
-			want:    task,
-			wantErr: false,
+			name:        "正常系",
+			args:        args{id: id},
+			expected:    task,
+			expectedErr: false,
 		},
 		{
-			name:    "存在しないID",
-			args:    args{id: 2},
-			want:    nil,
-			wantErr: false,
+			name:        "存在しないID",
+			args:        args{id: 2},
+			expected:    nil,
+			expectedErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := repo.FindById(tt.args.id)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("InMemoryTaskRepository.FindById() error = %v, wantErr %v", err, tt.wantErr)
+			if (err != nil) != tt.expectedErr {
+				t.Errorf("InMemoryTaskRepository.FindById() error = %v, expectedErr %v", err, tt.expectedErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				if tt.want != nil && got != nil {
-					if got.Id().Value() != tt.want.Id().Value() {
-						t.Errorf("InMemoryTaskRepository.FindById() = %v, want %v", got.Id().Value(), tt.want.Id().Value())
+			if !reflect.DeepEqual(got, tt.expected) {
+				if tt.expected != nil && got != nil {
+					if got.Id().Value() != tt.expected.Id().Value() {
+						t.Errorf("InMemoryTaskRepository.FindById() = %v, expected %v", got.Id().Value(), tt.expected.Id().Value())
 					}
 				} else {
-					t.Errorf("InMemoryTaskRepository.FindById() = %v, want %v", got, tt.want)
+					t.Errorf("InMemoryTaskRepository.FindById() = %v, expected %v", got, tt.expected)
 				}
 			}
 		})
@@ -69,38 +69,38 @@ func TestInMemoryTaskRepository_FindByTitle(t *testing.T) {
 		title string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    *TaskModel.Task
-		wantErr bool
+		name        string
+		args        args
+		expected    *TaskModel.Task
+		expectedErr bool
 	}{
 		{
-			name:    "正常系",
-			args:    args{title: title},
-			want:    task,
-			wantErr: false,
+			name:        "正常系",
+			args:        args{title: title},
+			expected:    task,
+			expectedErr: false,
 		},
 		{
-			name:    "存在しないタイトル",
-			args:    args{title: "not found"},
-			want:    nil,
-			wantErr: false,
+			name:        "存在しないタイトル",
+			args:        args{title: "not found"},
+			expected:    nil,
+			expectedErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := repo.FindByTitle(tt.args.title)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("InMemoryTaskRepository.FindByTitle() error = %v, wantErr %v", err, tt.wantErr)
+			if (err != nil) != tt.expectedErr {
+				t.Errorf("InMemoryTaskRepository.FindByTitle() error = %v, expectedErr %v", err, tt.expectedErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				if tt.want != nil && got != nil {
-					if got.Id().Value() != tt.want.Id().Value() {
-						t.Errorf("InMemoryTaskRepository.FindByTitle() = %v, want %v", got.Id().Value(), tt.want.Id().Value())
+			if !reflect.DeepEqual(got, tt.expected) {
+				if tt.expected != nil && got != nil {
+					if got.Id().Value() != tt.expected.Id().Value() {
+						t.Errorf("InMemoryTaskRepository.FindByTitle() = %v, expected %v", got.Id().Value(), tt.expected.Id().Value())
 					}
 				} else {
-					t.Errorf("InMemoryTaskRepository.FindByTitle() = %v, want %v", got, tt.want)
+					t.Errorf("InMemoryTaskRepository.FindByTitle() = %v, expected %v", got, tt.expected)
 				}
 			}
 		})
@@ -117,29 +117,29 @@ func TestInMemoryTaskRepository_FindAll(t *testing.T) {
 	repo.Save(task)
 
 	tests := []struct {
-		name    string
-		want    []*TaskModel.Task
-		wantErr bool
+		name        string
+		expected    []*TaskModel.Task
+		expectedErr bool
 	}{
 		{
-			name:    "正常系",
-			want:    []*TaskModel.Task{task},
-			wantErr: false,
+			name:        "正常系",
+			expected:    []*TaskModel.Task{task},
+			expectedErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := repo.FindAll()
-			if (err != nil) != tt.wantErr {
-				t.Errorf("InMemoryTaskRepository.FindAll() error = %v, wantErr %v", err, tt.wantErr)
+			if (err != nil) != tt.expectedErr {
+				t.Errorf("InMemoryTaskRepository.FindAll() error = %v, expectedErr %v", err, tt.expectedErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				if len(got) != len(tt.want) {
-					t.Errorf("InMemoryTaskRepository.FindAll() = %v, want %v", len(got), len(tt.want))
+			if !reflect.DeepEqual(got, tt.expected) {
+				if len(got) != len(tt.expected) {
+					t.Errorf("InMemoryTaskRepository.FindAll() = %v, expected %v", len(got), len(tt.expected))
 				} else {
-					if got[0].Id().Value() != tt.want[0].Id().Value() {
-						t.Errorf("InMemoryTaskRepository.FindAll() = %v, want %v", got[0].Id().Value(), tt.want[0].Id().Value())
+					if got[0].Id().Value() != tt.expected[0].Id().Value() {
+						t.Errorf("InMemoryTaskRepository.FindAll() = %v, expected %v", got[0].Id().Value(), tt.expected[0].Id().Value())
 					}
 				}
 			}
@@ -159,29 +159,29 @@ func TestInMemoryTaskRepository_Save(t *testing.T) {
 		task *TaskModel.Task
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
+		name        string
+		args        args
+		expectedErr bool
 	}{
 		{
-			name:    "正常系",
-			args:    args{task: task},
-			wantErr: false,
+			name:        "正常系",
+			args:        args{task: task},
+			expectedErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := repo.Save(tt.args.task); (err != nil) != tt.wantErr {
-				t.Errorf("InMemoryTaskRepository.Save() error = %v, wantErr %v", err, tt.wantErr)
+			if err := repo.Save(tt.args.task); (err != nil) != tt.expectedErr {
+				t.Errorf("InMemoryTaskRepository.Save() error = %v, expectedErr %v", err, tt.expectedErr)
 			}
 			savedTask, _ := repo.FindById(id)
 			if !reflect.DeepEqual(savedTask, task) {
 				if task != nil && savedTask != nil {
 					if savedTask.Id().Value() != task.Id().Value() {
-						t.Errorf("InMemoryTaskRepository.Save() = %v, want %v", savedTask.Id().Value(), task.Id().Value())
+						t.Errorf("InMemoryTaskRepository.Save() = %v, expected %v", savedTask.Id().Value(), task.Id().Value())
 					}
 				} else {
-					t.Errorf("InMemoryTaskRepository.Save() = %v, want %v", savedTask, task)
+					t.Errorf("InMemoryTaskRepository.Save() = %v, expected %v", savedTask, task)
 				}
 			}
 		})
@@ -199,20 +199,20 @@ func TestInMemoryTaskRepository_Delete(t *testing.T) {
 		task *TaskModel.Task
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
+		name        string
+		args        args
+		expectedErr bool
 	}{
 		{
-			name:    "正常系",
-			args:    args{task: task},
-			wantErr: false,
+			name:        "正常系",
+			args:        args{task: task},
+			expectedErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := repo.Delete(tt.args.task); (err != nil) != tt.wantErr {
-				t.Errorf("InMemoryTaskRepository.Delete() error = %v, wantErr %v", err, tt.wantErr)
+			if err := repo.Delete(tt.args.task); (err != nil) != tt.expectedErr {
+				t.Errorf("InMemoryTaskRepository.Delete() error = %v, expectedErr %v", err, tt.expectedErr)
 				return
 			}
 			deletedTask, _ := repo.FindById(id)
