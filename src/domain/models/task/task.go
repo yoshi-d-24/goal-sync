@@ -1,7 +1,7 @@
-package tasks
+package task
 
 import (
-	VO "github.com/yoshi-d-24/goal-sync/domain/models/tasks/valueobject"
+	VO "github.com/yoshi-d-24/goal-sync/domain/models/task/valueobject"
 )
 
 type TaskInterface interface {
