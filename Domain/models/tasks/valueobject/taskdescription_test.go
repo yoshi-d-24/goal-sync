@@ -1,4 +1,4 @@
-package task
+package valueobject
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ func TestNewTaskDescription(t *testing.T) {
 		expectedErr error
 	}{
 		{value: "有効なタスク詳細", expected: "有効なタスク詳細", expectedErr: nil},
-		{value: "", expected: "", expectedErr: fmt.Errorf("TaskDescription must be at least %d characters long", MIN_LENGTH)},
+		{value: "", expected: "", expectedErr: fmt.Errorf("TaskDescription must be at least %d characters long", TASK_DESCRIPTION_MIN_LENGTH)},
 		{value: "a", expected: "a", expectedErr: nil},
-		{value: string(make([]rune, 201)), expected: "", expectedErr: fmt.Errorf("TaskDescription must be no more than %d characters long", MAX_LENGTH)},
+		{value: string(make([]rune, 201)), expected: "", expectedErr: fmt.Errorf("TaskDescription must be no more than %d characters long", TASK_DESCRIPTION_MAX_LENGTH)},
 	}
 
 	for _, test := range tests {

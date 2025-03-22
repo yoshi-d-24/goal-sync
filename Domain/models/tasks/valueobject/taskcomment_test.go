@@ -1,4 +1,4 @@
-package task
+package valueobject
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ func TestNewTaskComment(t *testing.T) {
 		expectedErr error
 	}{
 		{value: "有効なコメント", expected: "有効なコメント", expectedErr: nil},
-		{value: "", expected: "", expectedErr: fmt.Errorf("TaskComment must be at least %d characters long", MIN_LENGTH)},
+		{value: "", expected: "", expectedErr: fmt.Errorf("TaskComment must be at least %d characters long", DOD_MIN_LENGTH)},
 		{value: "a", expected: "a", expectedErr: nil},
-		{value: string(make([]rune, 1001)), expected: "", expectedErr: fmt.Errorf("TaskComment must be no more than %d characters long", MAX_LENGTH)},
+		{value: string(make([]rune, 1001)), expected: "", expectedErr: fmt.Errorf("TaskComment must be no more than %d characters long", DOD_MAX_LENGTH)},
 	}
 
 	for _, test := range tests {
