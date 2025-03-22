@@ -12,9 +12,9 @@ func TestNewTitle(t *testing.T) {
 		expectedErr error
 	}{
 		{value: "有効なタイトル", expected: "有効なタイトル", expectedErr: nil},
-		{value: "", expected: "", expectedErr: fmt.Errorf("title must be at least %d characters long", MIN_LENGTH)},
+		{value: "", expected: "", expectedErr: fmt.Errorf("title must be at least %d characters long", TITLE_MIN_LENGTH)},
 		{value: "a", expected: "a", expectedErr: nil},
-		{value: "a" + string(make([]rune, 50)), expected: "", expectedErr: fmt.Errorf("title must be no more than %d characters long", MAX_LENGTH)},
+		{value: "a" + string(make([]rune, 50)), expected: "", expectedErr: fmt.Errorf("title must be no more than %d characters long", TITLE_MAX_LENGTH)},
 	}
 
 	for _, test := range tests {

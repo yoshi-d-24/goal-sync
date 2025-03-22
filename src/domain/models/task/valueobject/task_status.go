@@ -2,29 +2,25 @@ package valueobject
 
 import (
 	"fmt"
+
+	Core "github.com/yoshi-d-24/goal-sync/domain/models/core"
 )
 
-type TaskStatus int
-
 const (
-	Incomplete TaskStatus = iota
+	Incomplete int = iota
 	InProgress
 	Complete
 )
 
-type TaskStatusInterface interface {
-	Value() int
+type TaskStatus struct {
+	Core.ValueObject[int]
 }
 
 func NewTaskStatus(value int) (*TaskStatus, error) {
-	if value < int(Incomplete) || value > int(Complete) {
+	if value < Incomplete || value > Complete {
 		return nil, fmt.Errorf("invalid TaskStatus value: %d", value)
 	}
 
-	taskStatus := TaskStatus(value)
+	taskStatus := TaskStatus{ValueObject: Core.NewValueObject(value)}
 	return &taskStatus, nil
-}
-
-func (t *TaskStatus) Value() int {
-	return int(*t)
 }
