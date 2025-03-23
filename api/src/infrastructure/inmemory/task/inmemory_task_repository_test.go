@@ -55,7 +55,7 @@ func TestInMemoryTaskRepository_FindById(t *testing.T) {
 		})
 	}
 
-	repo.Delete(task)
+	repo.Delete(id)
 }
 
 func TestInMemoryTaskRepository_FindByTitle(t *testing.T) {
@@ -106,7 +106,7 @@ func TestInMemoryTaskRepository_FindByTitle(t *testing.T) {
 		})
 	}
 
-	repo.Delete(task)
+	repo.Delete(id)
 }
 
 func TestInMemoryTaskRepository_FindAll(t *testing.T) {
@@ -146,7 +146,7 @@ func TestInMemoryTaskRepository_FindAll(t *testing.T) {
 		})
 	}
 
-	repo.Delete(task)
+	repo.Delete(id)
 }
 
 func TestInMemoryTaskRepository_Save(t *testing.T) {
@@ -211,7 +211,7 @@ func TestInMemoryTaskRepository_Delete(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := repo.Delete(tt.args.task); (err != nil) != tt.expectedErr {
+			if err := repo.Delete(tt.args.task.Id().Value()); (err != nil) != tt.expectedErr {
 				t.Errorf("InMemoryTaskRepository.Delete() error = %v, expectedErr %v", err, tt.expectedErr)
 				return
 			}

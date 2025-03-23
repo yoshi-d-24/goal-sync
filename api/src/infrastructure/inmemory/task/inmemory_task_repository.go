@@ -46,7 +46,7 @@ func (r *InMemoryTaskRepository) Save(task *TaskModel.Task) error {
 	return nil
 }
 
-func (r *InMemoryTaskRepository) Delete(task *TaskModel.Task) error {
-	delete(DB, task.Id().Value())
+func (r *InMemoryTaskRepository) Delete(id int) error {
+	delete(DB, id)
 	return nil
 }

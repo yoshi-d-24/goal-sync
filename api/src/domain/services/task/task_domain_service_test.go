@@ -40,8 +40,8 @@ func (m *MockTaskRepository) Save(task *TaskModel.Task) error {
 	return args.Error(0)
 }
 
-func (m *MockTaskRepository) Delete(task *TaskModel.Task) error {
-	args := m.Called(task)
+func (m *MockTaskRepository) Delete(id int) error {
+	args := m.Called(id)
 	return args.Error(0)
 }
 
