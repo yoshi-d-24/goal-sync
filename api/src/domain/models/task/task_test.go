@@ -11,7 +11,7 @@ import (
 func TestNewTask(t *testing.T) {
 	assert := assert.New(t)
 
-	id, _ := VO.NewTaskId(1)
+	id, _ := VO.NewTaskId("50ac2aa3-ab64-4184-9112-d23221dc1832")
 	title, _ := VO.NewTitle("Task Title")
 	description, _ := VO.NewTaskDescription("Task Description")
 	status, _ := VO.NewTaskStatus(VO.Incomplete)

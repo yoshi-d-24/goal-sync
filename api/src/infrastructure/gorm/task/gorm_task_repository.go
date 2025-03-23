@@ -2,19 +2,24 @@ package task
 
 import (
 	"errors"
+	"time"
 
 	"gorm.io/gorm"
 
+	"github.com/google/uuid"
 	TaskModel "github.com/yoshi-d-24/goal-sync/domain/models/task"
 	VO "github.com/yoshi-d-24/goal-sync/domain/models/task/value"
 )
 
-type TaskDto struct {
-	gorm.Model
+type Task struct {
+	ID          uuid.UUID `gorm:"type:uuid"`
 	Title       string
 	Description string
 	Dod         string
 	Status      int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
 }
 
 type GormTaskRepository struct {
@@ -26,9 +31,15 @@ func NewGormTaskRepository(db *gorm.DB) *GormTaskRepository {
 	return &GormTaskRepository{db: db}
 }
 
-func (r *GormTaskRepository) FindById(id int) (*TaskModel.Task, error) {
-	var task TaskDto
-	err := r.db.First(&task, id).Error
+func (r *GormTaskRepository) FindById(id string) (*TaskModel.Task, error) {
+	var task Task
+
+	u, err := uuid.Parse(id)
+
+	if err != nil {
+		return nil, err
+	}
+	err = r.db.First(&task, u).Error
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -42,7 +53,7 @@ func (r *GormTaskRepository) FindById(id int) (*TaskModel.Task, error) {
 }
 
 func (r *GormTaskRepository) FindAll() ([]*TaskModel.Task, error) {
-	var tasks []TaskDto
+	var tasks []Task
 	err := r.db.Find(&tasks).Error
 
 	if err != nil {
@@ -62,7 +73,7 @@ func (r *GormTaskRepository) FindAll() ([]*TaskModel.Task, error) {
 }
 
 func (r *GormTaskRepository) FindByTitle(title string) (*TaskModel.Task, error) {
-	var task TaskDto
+	var task Task
 	err := r.db.Where("title = ?", title).First(&task).Error
 
 	if err != nil {
@@ -77,8 +88,13 @@ func (r *GormTaskRepository) FindByTitle(title string) (*TaskModel.Task, error) 
 }
 
 func (r *GormTaskRepository) Save(task *TaskModel.Task) error {
-	taskDto := toTaskDto(task)
-	err := r.db.Create(&taskDto).Error
+	taskRecord, err := toTaskRecord(task)
+
+	if err != nil {
+		return err
+	}
+
+	err = r.db.Create(&taskRecord).Error
 
 	if err != nil {
 		return err
@@ -87,8 +103,12 @@ func (r *GormTaskRepository) Save(task *TaskModel.Task) error {
 	return nil
 }
 
-func (r *GormTaskRepository) Delete(id int) error {
-	err := r.db.Delete(&TaskDto{}, id).Error
+func (r *GormTaskRepository) Delete(id string) error {
+	u, err := uuid.Parse(id)
+	if err != nil {
+		return err
+	}
+	err = r.db.Delete(&Task{}, u).Error
 
 	if err != nil {
 		return err
@@ -97,17 +117,23 @@ func (r *GormTaskRepository) Delete(id int) error {
 	return nil
 }
 
-func toTaskDto(taskModel *TaskModel.Task) *TaskDto {
-	return &TaskDto{
+func toTaskRecord(taskModel *TaskModel.Task) (*Task, error) {
+	id, err := uuid.Parse(taskModel.Id().Value())
+
+	if err != nil {
+		return nil, err
+	}
+	return &Task{
+		ID:          id,
 		Title:       taskModel.Title().Value(),
 		Description: taskModel.Description().Value(),
 		Dod:         taskModel.DoD().Value(),
 		Status:      taskModel.Status().Value(),
-	}
+	}, nil
 }
 
-func toTaskModel(task *TaskDto) (*TaskModel.Task, error) {
-	taskId, err := VO.NewTaskId(int(task.ID))
+func toTaskModel(task *Task) (*TaskModel.Task, error) {
+	taskId, err := VO.NewTaskId(task.ID.String())
 	if err != nil {
 		return nil, err
 	}

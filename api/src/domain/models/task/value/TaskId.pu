@@ -1,11 +1,11 @@
 @startuml TaskId
 
 class "TaskId(タスクID)" as TaskId {
-    + value: number
+    + value: string
 }
 
 note bottom of TaskId
-    登録順の連番を採番する。
+    UUID
 end note
 
 @enduml

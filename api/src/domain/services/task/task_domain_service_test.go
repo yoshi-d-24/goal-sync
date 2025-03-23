@@ -14,7 +14,12 @@ type MockTaskRepository struct {
 	mock.Mock
 }
 
-func (m *MockTaskRepository) FindById(id int) (*TaskModel.Task, error) {
+const (
+	uuid_1 = "50ac2aa3-ab64-4184-9112-d23221dc1832"
+	uuid_2 = "50ac2aa3-ab64-4184-9112-d23221dc1833"
+)
+
+func (m *MockTaskRepository) FindById(id string) (*TaskModel.Task, error) {
 	args := m.Called(id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
@@ -54,11 +59,11 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 		service := TaskDomainService{taskRepository: mockRepo}
 
 		titleValue := "Duplicate Title"
-		existingTask := createTestTaskWithTitle(1, titleValue)
+		existingTask := createTestTaskWithTitle(uuid_1, titleValue)
 
 		mockRepo.On("FindByTitle", titleValue).Return(existingTask, nil)
 
-		task := createTestTaskWithTitle(2, titleValue)
+		task := createTestTaskWithTitle(uuid_2, titleValue)
 
 		exists, err := service.ExistsDuplicateTitle(task)
 
@@ -75,7 +80,7 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 		titleValue := "New Title"
 		mockRepo.On("FindByTitle", titleValue).Return(nil, nil)
 
-		task := createTestTaskWithTitle(1, "New Title")
+		task := createTestTaskWithTitle(uuid_1, "New Title")
 
 		exists, err := service.ExistsDuplicateTitle(task)
 
@@ -94,7 +99,7 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 
 		mockRepo.On("FindByTitle", titleValue).Return(nil, expectedError)
 
-		task := createTestTaskWithTitle(1, titleValue)
+		task := createTestTaskWithTitle(uuid_1, titleValue)
 
 		exists, err := service.ExistsDuplicateTitle(task)
 
@@ -104,7 +109,7 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 	})
 }
 
-func createTestTaskWithTitle(id int, title string) *TaskModel.Task {
+func createTestTaskWithTitle(id string, title string) *TaskModel.Task {
 	taskId, _ := VO.NewTaskId(id)
 	titleValue, _ := VO.NewTitle(title)
 	description, _ := VO.NewTaskDescription("Task Description")

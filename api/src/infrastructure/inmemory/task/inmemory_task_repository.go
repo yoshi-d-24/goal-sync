@@ -8,13 +8,13 @@ type InMemoryTaskRepository struct {
 	TaskModel.ITaskRepository
 }
 
-var DB = map[int]*TaskModel.Task{}
+var DB = map[string]*TaskModel.Task{}
 
 func NewInMemoryTaskRepository() *InMemoryTaskRepository {
 	return &InMemoryTaskRepository{}
 }
 
-func (r *InMemoryTaskRepository) FindById(id int) (*TaskModel.Task, error) {
+func (r *InMemoryTaskRepository) FindById(id string) (*TaskModel.Task, error) {
 	if task, ok := DB[id]; ok {
 		return task, nil
 	}
@@ -46,7 +46,7 @@ func (r *InMemoryTaskRepository) Save(task *TaskModel.Task) error {
 	return nil
 }
 
-func (r *InMemoryTaskRepository) Delete(id int) error {
+func (r *InMemoryTaskRepository) Delete(id string) error {
 	delete(DB, id)
 	return nil
 }

@@ -8,14 +8,19 @@ import (
 	VO "github.com/yoshi-d-24/goal-sync/domain/models/task/value"
 )
 
+const (
+	uuid_1 = "50ac2aa3-ab64-4184-9112-d23221dc1832"
+	uuid_2 = "50ac2aa3-ab64-4184-9112-d23221dc1833"
+)
+
 func TestInMemoryTaskRepository_FindById(t *testing.T) {
 	repo := NewInMemoryTaskRepository()
-	id := 1
+	id := uuid_1
 	task := createTestTaskWithTitle(id, "test task")
 	repo.Save(task)
 
 	type args struct {
-		id int
+		id string
 	}
 	tests := []struct {
 		name        string
@@ -25,13 +30,13 @@ func TestInMemoryTaskRepository_FindById(t *testing.T) {
 	}{
 		{
 			name:        "正常系",
-			args:        args{id: id},
+			args:        args{id: uuid_1},
 			expected:    task,
 			expectedErr: false,
 		},
 		{
 			name:        "存在しないID",
-			args:        args{id: 2},
+			args:        args{id: uuid_2},
 			expected:    nil,
 			expectedErr: false,
 		},
@@ -55,12 +60,12 @@ func TestInMemoryTaskRepository_FindById(t *testing.T) {
 		})
 	}
 
-	repo.Delete(id)
+	repo.Delete(uuid_1)
 }
 
 func TestInMemoryTaskRepository_FindByTitle(t *testing.T) {
 	repo := NewInMemoryTaskRepository()
-	id := 1
+	id := uuid_1
 	title := "test task"
 	task := createTestTaskWithTitle(id, title)
 	repo.Save(task)
@@ -111,7 +116,7 @@ func TestInMemoryTaskRepository_FindByTitle(t *testing.T) {
 
 func TestInMemoryTaskRepository_FindAll(t *testing.T) {
 	repo := NewInMemoryTaskRepository()
-	id := 1
+	id := uuid_1
 	title := "test task"
 	task := createTestTaskWithTitle(id, title)
 	repo.Save(task)
@@ -151,7 +156,7 @@ func TestInMemoryTaskRepository_FindAll(t *testing.T) {
 
 func TestInMemoryTaskRepository_Save(t *testing.T) {
 	repo := NewInMemoryTaskRepository()
-	id := 1
+	id := uuid_1
 	title := "test task"
 	task := createTestTaskWithTitle(id, title)
 
@@ -190,7 +195,7 @@ func TestInMemoryTaskRepository_Save(t *testing.T) {
 
 func TestInMemoryTaskRepository_Delete(t *testing.T) {
 	repo := NewInMemoryTaskRepository()
-	id := 1
+	id := uuid_1
 	title := "test task"
 	task := createTestTaskWithTitle(id, title)
 	repo.Save(task)
@@ -223,7 +228,7 @@ func TestInMemoryTaskRepository_Delete(t *testing.T) {
 	}
 }
 
-func createTestTaskWithTitle(id int, title string) *TaskModel.Task {
+func createTestTaskWithTitle(id string, title string) *TaskModel.Task {
 	taskId, _ := VO.NewTaskId(id)
 	titleValue, _ := VO.NewTitle(title)
 	description, _ := VO.NewTaskDescription("Task Description")
