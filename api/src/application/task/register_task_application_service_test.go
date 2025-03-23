@@ -40,7 +40,7 @@ func (m *MockTaskRepository) Save(task *TaskModel.Task) error {
 	return args.Error(0)
 }
 
-func (m *MockTaskRepository) Delete(id int) error {
+func (m *MockTaskRepository) Delete(id string) error {
 	args := m.Called(id)
 	return args.Error(0)
 }
@@ -69,10 +69,9 @@ var TestUUIDGenerator = func() uuid.UUID {
 
 func DefaultCommand() RegisterTaskCommand {
 	return RegisterTaskCommand{
-		title:       "test title",
-		description: "test description",
-		dod:         "test dod",
-		status:      1,
+		Title:       "test title",
+		Description: "test description",
+		Dod:         "test dod",
 	}
 }
 
@@ -80,7 +79,7 @@ func DefaultExpectedTask() *TaskModel.Task {
 	taskID, _ := VO.NewTaskId(uuid_1)
 	title, _ := VO.NewTitle("test title")
 	description, _ := VO.NewTaskDescription("test description")
-	status, _ := VO.NewTaskStatus(1)
+	status, _ := VO.NewTaskStatus(VO.Incomplete)
 	dod, _ := VO.NewDoD("test dod")
 
 	return TaskModel.NewTask(*taskID, *title, *description, *status, *dod)
@@ -159,7 +158,7 @@ func TestRegisterTaskApplicationService_Execute(t *testing.T) {
 				tt.setup(tt.args)
 			}
 			s := RegisterTaskApplicationService{repository: mockRepo, domainService: mockDomainService, uuidGenerator: TestUUIDGenerator}
-			if err := s.execute(tt.args.command); err != nil && err.Error() != tt.expectedError.Error() {
+			if err := s.Execute(tt.args.command); err != nil && err.Error() != tt.expectedError.Error() {
 				t.Errorf("RegisterTaskApplicationService.execute() error = %v, wantErr %v", err, tt.expectedError)
 			}
 		})

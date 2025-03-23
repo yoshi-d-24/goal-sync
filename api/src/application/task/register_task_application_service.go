@@ -16,10 +16,9 @@ var DefaultUUIDGenerator = func() uuid.UUID {
 }
 
 type RegisterTaskCommand struct {
-	title       string
-	description string
-	dod         string
-	status      int
+	Title       string
+	Description string
+	Dod         string
 }
 
 type RegisterTaskApplicationService struct {
@@ -33,7 +32,7 @@ func NewRegisterTaskApplicationService(repository TaskModel.ITaskRepository) *Re
 	return &RegisterTaskApplicationService{repository: repository, domainService: domainService, uuidGenerator: DefaultUUIDGenerator}
 }
 
-func (s *RegisterTaskApplicationService) execute(command RegisterTaskCommand) error {
+func (s *RegisterTaskApplicationService) Execute(command RegisterTaskCommand) error {
 	task, err := toTaskModel(command, s.uuidGenerator)
 	if err != nil {
 		return err
@@ -61,25 +60,22 @@ func toTaskModel(command RegisterTaskCommand, uuidGenerator UUIDGenerator) (*Tas
 		return nil, err
 	}
 
-	title, err := VO.NewTitle(command.title)
+	title, err := VO.NewTitle(command.Title)
 	if err != nil {
 		return nil, err
 	}
 
-	description, err := VO.NewTaskDescription(command.description)
+	description, err := VO.NewTaskDescription(command.Description)
 	if err != nil {
 		return nil, err
 	}
 
-	dod, err := VO.NewDoD(command.dod)
+	dod, err := VO.NewDoD(command.Dod)
 	if err != nil {
 		return nil, err
 	}
 
-	status, err := VO.NewTaskStatus(command.status)
-	if err != nil {
-		return nil, err
-	}
+	status, _ := VO.NewTaskStatus(VO.Incomplete)
 
 	return TaskModel.NewTask(*id, *title, *description, *status, *dod), nil
 }

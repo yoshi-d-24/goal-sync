@@ -27,7 +27,7 @@ func (ts *TaskDomainService) ExistsDuplicateTitle(task *TaskModel.Task) (bool, e
 		return false, err
 	}
 	if duplicateTitleTask != nil {
-		return false, err
+		return true, err
 	}
-	return true, nil
+	return false, nil
 }

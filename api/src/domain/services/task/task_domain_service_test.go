@@ -45,7 +45,7 @@ func (m *MockTaskRepository) Save(task *TaskModel.Task) error {
 	return args.Error(0)
 }
 
-func (m *MockTaskRepository) Delete(id int) error {
+func (m *MockTaskRepository) Delete(id string) error {
 	args := m.Called(id)
 	return args.Error(0)
 }
@@ -67,7 +67,7 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 
 		exists, err := service.ExistsDuplicateTitle(task)
 
-		assert.False(exists)
+		assert.True(exists)
 		assert.NoError(err)
 		mockRepo.AssertExpectations(t)
 	})
@@ -84,7 +84,7 @@ func TestTaskDomainService_ExistsDuplicateTitle(t *testing.T) {
 
 		exists, err := service.ExistsDuplicateTitle(task)
 
-		assert.True(exists)
+		assert.False(exists)
 		assert.NoError(err)
 		mockRepo.AssertExpectations(t)
 	})
