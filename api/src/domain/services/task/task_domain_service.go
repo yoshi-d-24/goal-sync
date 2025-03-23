@@ -4,12 +4,21 @@ import (
 	TaskModel "github.com/yoshi-d-24/goal-sync/domain/models/task"
 )
 
+type ITaskDomainService interface {
+	TaskRepository() TaskModel.ITaskRepository
+	ExistsDuplicateTitle(task *TaskModel.Task) (bool, error)
+}
+
 type TaskDomainService struct {
 	taskRepository TaskModel.ITaskRepository
 }
 
 func NewTaskDomainService(repository TaskModel.ITaskRepository) *TaskDomainService {
 	return &TaskDomainService{taskRepository: repository}
+}
+
+func (ts *TaskDomainService) TaskRepository() TaskModel.ITaskRepository {
+	return ts.taskRepository
 }
 
 func (ts *TaskDomainService) ExistsDuplicateTitle(task *TaskModel.Task) (bool, error) {
