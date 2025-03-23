@@ -26,6 +26,7 @@ func setupTest(t *testing.T) (*gorm.DB, *GormTask.GormTaskRepository) {
 	return db, repo
 }
 
+// TODO: add test for not found
 func TestGormTaskRepository_FindById(t *testing.T) {
 	assert := assert.New(t)
 	db, repo := setupTest(t)
