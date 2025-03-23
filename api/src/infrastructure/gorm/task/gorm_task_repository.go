@@ -16,7 +16,7 @@ type Task struct {
 	Title       string
 	Description string
 	Dod         string
-	Status      int
+	Status      uint8
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
@@ -128,7 +128,7 @@ func toTaskRecord(taskModel *TaskModel.Task) (*Task, error) {
 		Title:       taskModel.Title().Value(),
 		Description: taskModel.Description().Value(),
 		Dod:         taskModel.DoD().Value(),
-		Status:      taskModel.Status().Value(),
+		Status:      uint8(taskModel.Status().Value()),
 	}, nil
 }
 
@@ -149,7 +149,7 @@ func toTaskModel(task *Task) (*TaskModel.Task, error) {
 	if err != nil {
 		return nil, err
 	}
-	status, err := VO.NewTaskStatus(task.Status)
+	status, err := VO.NewTaskStatus(int(task.Status))
 	if err != nil {
 		return nil, err
 	}
