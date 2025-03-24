@@ -1,10 +1,13 @@
 package ginhandler
 
 import (
+	"context"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	TaskApplicationService "github.com/yoshi-d-24/goal-sync/application/task"
+	Gemini "github.com/yoshi-d-24/goal-sync/infrastructure/gemini"
 	GormCore "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/core"
 	GormTaskRepository "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/task"
 	Request "github.com/yoshi-d-24/goal-sync/presentation/gin/dto/request"
@@ -13,10 +16,32 @@ import (
 func Start() {
 	r := gin.Default()
 
+	db := GormCore.CreateDB()
 	taskRepository := GormTaskRepository.NewGormTaskRepository(GormCore.CreateDB())
+	sqlDb, err := db.DB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer sqlDb.Close()
 
-	r.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello, World!")
+	r.POST("/task-candidates", func(c *gin.Context) {
+		var json Request.GetTaskCandidates
+
+		if err := c.Copy().ShouldBindJSON(&json); err != nil {
+			c.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+
+		ctx := context.Background()
+
+		geminiApiClient, err := Gemini.NewGeminiApiClient(ctx)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		geminiApiClient.GenerateText(ctx, json.Text)
 	})
 
 	r.POST("/task", func(c *gin.Context) {
