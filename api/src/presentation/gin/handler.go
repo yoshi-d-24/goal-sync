@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	TaskApplicationService "github.com/yoshi-d-24/goal-sync/application/task"
+	TaskCandidateApplicationService "github.com/yoshi-d-24/goal-sync/application/taskcandidate"
 	Gemini "github.com/yoshi-d-24/goal-sync/infrastructure/gemini"
 	GormCore "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/core"
 	GormTaskRepository "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/task"
@@ -41,7 +42,20 @@ func Start() {
 			return
 		}
 
-		geminiApiClient.GenerateText(ctx, json.Text)
+		getTaskCandidateService := TaskCandidateApplicationService.NewGetTaskCandidatesApplicationService(geminiApiClient)
+
+		command := TaskCandidateApplicationService.GetTaskCandidatesCommand{
+			Text: json.Text,
+			Job:  json.Job,
+		}
+
+		candidates, err := getTaskCandidateService.Execute(ctx, command)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		c.JSON(http.StatusOK, map[string]string{"candidates": candidates})
 	})
 
 	r.POST("/task", func(c *gin.Context) {

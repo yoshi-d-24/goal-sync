@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"encoding/json"
+
 	"github.com/google/generative-ai-go/genai"
 	"google.golang.org/api/option"
 )
@@ -34,36 +36,27 @@ func NewGeminiApiClient(ctx context.Context) (*GeminiApiClient, error) {
 	return &GeminiApiClient{generateClient: generateClient}, nil
 }
 
-func (c *GeminiApiClient) GenerateText(ctx context.Context, prompt string) ([]*genai.Candidate, error) {
+func (c *GeminiApiClient) GenerateText(ctx context.Context, prompt string) (string, error) {
 	if len(prompt) == 0 {
-		return nil, fmt.Errorf("prompt should not be empty")
+		return "", fmt.Errorf("prompt should not be empty")
 	}
 
 	client, err := c.generateClient()
 	if err != nil {
-		return nil, fmt.Errorf("failed to create gemini client", err)
+		return "", fmt.Errorf("failed to create gemini client", err)
 	}
 	defer client.Close()
 
 	model := client.GenerativeModel(modelCode)
-	text := genai.Text(prompt)
-	res, err := model.GenerateContent(ctx, text)
+	res, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
-		return nil, fmt.Errorf("failed to call gemini api", err)
+		return "", fmt.Errorf("failed to call gemini api", err)
 	}
 
-	// TODO: return merged string
-	printResponse(res)
-	return res.Candidates, nil
-}
-
-func printResponse(resp *genai.GenerateContentResponse) {
-	for _, cand := range resp.Candidates {
-		if cand.Content == nil {
-			continue
-		}
-		for _, part := range cand.Content.Parts {
-			fmt.Println(part)
-		}
+	bs, err := json.Marshal(res.Candidates[0].Content.Parts[0])
+	if err != nil {
+		return "", fmt.Errorf("failed to parse gemini api result", err)
 	}
+	result := string(bs)
+	return result, nil
 }
