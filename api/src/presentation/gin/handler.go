@@ -4,7 +4,9 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	TaskApplicationService "github.com/yoshi-d-24/goal-sync/application/task"
 	TaskCandidateApplicationService "github.com/yoshi-d-24/goal-sync/application/taskcandidate"
@@ -24,6 +26,28 @@ func Start() {
 		log.Fatal(err)
 	}
 	defer sqlDb.Close()
+
+	r.Use(cors.New(cors.Config{
+		// アクセスを許可したいアクセス元
+		AllowOrigins: []string{
+			"http://localhost:3000",
+		},
+		AllowMethods: []string{
+			"POST",
+			"GET",
+			"OPTIONS",
+		},
+		AllowHeaders: []string{
+			"Access-Control-Allow-Credentials",
+			"Access-Control-Allow-Headers",
+			"Content-Type",
+			"Content-Length",
+			"Accept-Encoding",
+			"Authorization",
+		},
+		AllowCredentials: false,
+		MaxAge:           24 * time.Hour,
+	}))
 
 	r.POST("/task-candidates", func(c *gin.Context) {
 		var json Request.GetTaskCandidates

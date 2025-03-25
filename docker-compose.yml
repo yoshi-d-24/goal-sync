@@ -1,0 +1,43 @@
+services:
+  view:
+    build:
+      context: .
+    image: mcr.microsoft.com/devcontainers/typescript-node:22-bookworm
+    volumes:
+      - ./:/workspace:cached
+      - view_node_modules:/workspace/view/node_modules
+    command: sleep infinity
+    networks:
+      - goal-sync
+    ports:
+      - "3000:3000"
+  api:
+    build:
+      context: .
+    image: mcr.microsoft.com/devcontainers/go:1-1.23-bookworm
+    volumes:
+      - ./:/workspace:cached
+    command: sleep infinity
+    networks:
+      - goal-sync
+    ports:
+      - "8080:8080"
+  db:
+    build:
+      context: .
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - goal-sync
+volumes:
+  postgres-data:
+  view_node_modules:
+networks:
+  goal-sync:
+    driver: bridge
