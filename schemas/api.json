@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/TaskCandidate",
+    "definitions": {
+        "TaskCandidate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "matchRate": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "matchRate",
+                "name"
+            ],
+            "title": "TaskCandidate"
+        }
+    }
+}
