@@ -19,8 +19,8 @@ type GetTaskCandidatesCommand struct {
 }
 
 type TaskCandidate struct {
-	Name       string
-	MatcheRate string
+	Name      string
+	MatchRate string
 }
 
 func NewGetTaskCandidatesApplicationService(generativeApiClient IGenerativeApiCleint) *GetTaskCandidatesApplicationService {
@@ -65,8 +65,8 @@ func (s *GetTaskCandidatesApplicationService) Execute(ctx context.Context, comma
 		name := strings.TrimSpace(parts[1])
 		matchRate := strings.TrimSpace(parts[2])
 		candidates = append(candidates, TaskCandidate{
-			Name:       name,
-			MatcheRate: matchRate,
+			Name:      name,
+			MatchRate: matchRate,
 		})
 	}
 

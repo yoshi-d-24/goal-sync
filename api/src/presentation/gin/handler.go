@@ -83,8 +83,8 @@ func Start() {
 		var resCandidates []Response.TaskCandidate
 		for _, candidate := range candidates {
 			resCandidates = append(resCandidates, Response.TaskCandidate{
-				Name:       candidate.Name,
-				MatcheRate: candidate.MatcheRate,
+				Name:      candidate.Name,
+				MatchRate: candidate.MatchRate,
 			})
 		}
 		c.JSON(http.StatusOK, Response.GetTaskCandidatesResponse{

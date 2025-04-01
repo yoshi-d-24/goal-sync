@@ -5,6 +5,6 @@ type GetTaskCandidatesResponse struct {
 }
 
 type TaskCandidate struct {
-	Name       string `json:"name"`
-	MatcheRate string `json:"matcheRate"`
+	Name      string `json:"name"`
+	MatchRate string `json:"matchRate"`
 }

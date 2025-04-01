@@ -43,8 +43,8 @@ func TestGetTaskCandidatesApplicationService_Execute(t *testing.T) {
 				return "1,ユーザー管理画面の実装,95%\\n2,バグ修正,95%", nil
 			},
 			expectedCandidates: []taskcandidate.TaskCandidate{
-				{Name: "ユーザー管理画面の実装", MatcheRate: "95%"},
-				{Name: "バグ修正", MatcheRate: "95%"},
+				{Name: "ユーザー管理画面の実装", MatchRate: "95%"},
+				{Name: "バグ修正", MatchRate: "95%"},
 			},
 			expectedError: nil,
 		},
@@ -82,8 +82,8 @@ func TestGetTaskCandidatesApplicationService_Execute(t *testing.T) {
 				return "1,正しいタスク,90%\\n不正な行\\n3,別の正しいタスク,80%", nil
 			},
 			expectedCandidates: []taskcandidate.TaskCandidate{
-				{Name: "正しいタスク", MatcheRate: "90%"},
-				{Name: "別の正しいタスク", MatcheRate: "80%"},
+				{Name: "正しいタスク", MatchRate: "90%"},
+				{Name: "別の正しいタスク", MatchRate: "80%"},
 			},
 			expectedError: nil,
 		},
@@ -97,8 +97,8 @@ func TestGetTaskCandidatesApplicationService_Execute(t *testing.T) {
 				return "1,タスク1,90%\\n\\n2,タスク2,85%", nil
 			},
 			expectedCandidates: []taskcandidate.TaskCandidate{
-				{Name: "タスク1", MatcheRate: "90%"},
-				{Name: "タスク2", MatcheRate: "85%"},
+				{Name: "タスク1", MatchRate: "90%"},
+				{Name: "タスク2", MatchRate: "85%"},
 			},
 			expectedError: nil,
 		},
@@ -112,8 +112,8 @@ func TestGetTaskCandidatesApplicationService_Execute(t *testing.T) {
 				return "1,タスクA,92%\\n2,タスクB,88%\\n", nil // 末尾に \n
 			},
 			expectedCandidates: []taskcandidate.TaskCandidate{
-				{Name: "タスクA", MatcheRate: "92%"},
-				{Name: "タスクB", MatcheRate: "88%"},
+				{Name: "タスクA", MatchRate: "92%"},
+				{Name: "タスクB", MatchRate: "88%"},
 			},
 			expectedError: nil,
 		},
