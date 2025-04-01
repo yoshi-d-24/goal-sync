@@ -1,7 +1,28 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/TaskCandidate",
+    "type": "object",
+    "allOf": [
+        { "$ref": "#/definitions/GetTaskCandidateResponse" }
+    ],
+    "additionalProperties": false,
+    "properties": {},
     "definitions": {
+        "GetTaskCandidateResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "taskCandidates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TaskCandidate"
+                    }
+                }
+            },
+            "required": [
+                "taskCandidates"
+            ],
+            "title": "GetTaskCandidateResponse"
+        },
         "TaskCandidate": {
             "type": "object",
             "additionalProperties": false,

@@ -5,6 +5,11 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type Api = GetTaskCandidateResponse & {};
+
+export interface GetTaskCandidateResponse {
+  taskCandidates: TaskCandidate[];
+}
 export interface TaskCandidate {
   name: string;
   matchRate: string;

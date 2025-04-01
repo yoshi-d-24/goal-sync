@@ -1,10 +1,11 @@
 "use client"
 
 import React, { useState } from "react";
+import type { GetTaskCandidateResponse, TaskCandidate } from "@/app/models/api";
 
-export default function TaskCandidate() {
+export default function TaskCandidatePage() {
     const [text, setText] = useState('');
-    const [candidates, setCandidates] = useState('');
+    const [taskCandidates, setTaskCandidates] = useState([] as TaskCandidate[]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -24,9 +25,13 @@ export default function TaskCandidate() {
             console.log('failed to get candidates')
         }
         const data = await res.json();
-        
-        console.log(data);
-        setCandidates(JSON.parse(data));
+
+        const responseModel = {
+            ...data
+        } satisfies GetTaskCandidateResponse
+
+        setTaskCandidates(responseModel.taskCandidates ?? [])
+        console.log(taskCandidates)
     }
 
     return (
@@ -39,7 +44,13 @@ export default function TaskCandidate() {
                 ></textarea>
                 <button type="submit">Button</button>
             </form>
-            <span content={candidates}></span>
+            <ul className='md:flex  hidden flex-initial text-left'>
+                {taskCandidates.map((value) => (
+                    <li>
+                        {`タスク名: ${value.name} 一致率: ${value.matchRate}`}
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
