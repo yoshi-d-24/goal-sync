@@ -14,6 +14,7 @@ import (
 	GormCore "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/core"
 	GormTaskRepository "github.com/yoshi-d-24/goal-sync/infrastructure/gorm/task"
 	Request "github.com/yoshi-d-24/goal-sync/presentation/gin/dto/request"
+	Response "github.com/yoshi-d-24/goal-sync/presentation/gin/dto/response"
 )
 
 func Start() {
@@ -50,7 +51,7 @@ func Start() {
 	}))
 
 	r.POST("/task-candidates", func(c *gin.Context) {
-		var json Request.GetTaskCandidates
+		var json Request.GetTaskCandidatesRequest
 
 		if err := c.Copy().ShouldBindJSON(&json); err != nil {
 			c.JSON(http.StatusBadRequest, err.Error())
@@ -79,11 +80,20 @@ func Start() {
 			return
 		}
 
-		c.JSON(http.StatusOK, map[string]any{"candidates": candidates})
+		var resCandidates []Response.TaskCandidate
+		for _, candidate := range candidates {
+			resCandidates = append(resCandidates, Response.TaskCandidate{
+				Name:       candidate.Name,
+				MatcheRate: candidate.MatcheRate,
+			})
+		}
+		c.JSON(http.StatusOK, Response.GetTaskCandidatesResponse{
+			TaskCandidates: resCandidates,
+		})
 	})
 
 	r.POST("/task", func(c *gin.Context) {
-		var json Request.RegisterTask
+		var json Request.RegisterTaskRequest
 
 		if err := c.Copy().ShouldBindJSON(&json); err != nil {
 			c.JSON(http.StatusBadRequest, err.Error())
