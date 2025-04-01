@@ -43,19 +43,19 @@ func (c *GeminiApiClient) GenerateText(ctx context.Context, prompt string) (stri
 
 	client, err := c.generateClient()
 	if err != nil {
-		return "", fmt.Errorf("failed to create gemini client", err)
+		return "", fmt.Errorf("failed to create gemini client. err=%s", err)
 	}
 	defer client.Close()
 
 	model := client.GenerativeModel(modelCode)
 	res, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
-		return "", fmt.Errorf("failed to call gemini api", err)
+		return "", fmt.Errorf("failed to call gemini api. err=%s", err)
 	}
 
 	bs, err := json.Marshal(res.Candidates[0].Content.Parts[0])
 	if err != nil {
-		return "", fmt.Errorf("failed to parse gemini api result", err)
+		return "", fmt.Errorf("failed to parse gemini api result. err=%s", err)
 	}
 	result := string(bs)
 	return result, nil
