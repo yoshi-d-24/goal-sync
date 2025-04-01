@@ -79,7 +79,7 @@ func Start() {
 			return
 		}
 
-		c.JSON(http.StatusOK, map[string]string{"candidates": candidates})
+		c.JSON(http.StatusOK, map[string]any{"candidates": candidates})
 	})
 
 	r.POST("/task", func(c *gin.Context) {
