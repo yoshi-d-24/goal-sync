@@ -7,3 +7,7 @@
     * サーバーサイドのソース
 * /documents
     * ドキュメント
+* /schemas
+    * JSON Schemaファイル
+* /view
+    * ビューサイドのソース
